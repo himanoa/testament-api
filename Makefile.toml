@@ -1,0 +1,38 @@
+[tasks.clean]
+command = "cargo"
+args = ["clean"]
+
+[tasks.build]
+command = "cargo"
+args = ["build"]
+dependencies = ["clean"]
+
+[tasks.test]
+command = "cargo"
+args = ["test"]
+dependencies = ["clean"]
+
+[tasks.format]
+install_crate = "rustfmt"
+command = "cargo"
+args = ["fmt", "--all", "--"]
+
+[tasks.setup-db]
+command = "diesel"
+args = ["setup"]
+
+[tasks.migration]
+command = "diesel"
+args = ["migration", "run"]
+
+[tasks.generate-schema]
+command = "diesel"
+args = ["print-schema", ">", "src/schema.rs"]
+
+[tasks.setup]
+dependencies = [
+    "format",
+		"setup-db",
+		"migration",
+		"generate-schema"
+]
