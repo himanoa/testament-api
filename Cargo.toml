@@ -1,0 +1,6 @@
+[package]
+name = "testament-api"
+version = "0.1.0"
+authors = ["himanoa <matsunoappy@gmail.com>"]
+
+[dependencies]
