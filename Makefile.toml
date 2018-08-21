@@ -33,11 +33,11 @@ dependencies = [
 
 [tasks.migration-test]
 command = "diesel"
-args = ["migration", "--database-url", "${TEST_DATABASE_URL}"]
+args = ["migration","run", "--database-url", "${TEST_DATABASE_URL}"]
 
 [tasks.migration-dev]
 command = "diesel"
-args = ["migration", "--database-url", "${DATABASE_URL}"]
+args = ["migration","run", "--database-url", "${DATABASE_URL}"]
 
 [tasks.migration]
 dependencies = [
