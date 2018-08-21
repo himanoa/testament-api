@@ -19,11 +19,11 @@ args = ["fmt", "--all", "--"]
 
 [tasks.setup-db-test]
 command = "diesel"
-args = ["setup", "--config-file", ".env.test"]
+args = ["setup", "--database-url", "${TEST_DATABASE_URL}"]
 
 [tasks.setup-db-dev]
 command = "diesel"
-args = ["setup", "--config-file", ".env"]
+args = ["setup", "--database-url", "${DATABASE_URL}"]
 
 [tasks.setup-db]
 dependencies = [
@@ -33,11 +33,11 @@ dependencies = [
 
 [tasks.migration-test]
 command = "diesel"
-args = ["migration", "run", "--config-file", ".env.test"]
+args = ["migration", "--database-url", "${TEST_DATABASE_URL}"]
 
 [tasks.migration-dev]
 command = "diesel"
-args = ["migration", "run", "--config-file", ".env"]
+args = ["migration", "--database-url", "${DATABASE_URL}"]
 
 [tasks.migration]
 dependencies = [
@@ -47,7 +47,7 @@ dependencies = [
 
 [tasks.generate-schema]
 command = "diesel"
-args = ["print-schema", "--config-file", ".env", ">", "src/schema.rs"]
+args = ["print-schema", ">", "src/schema.rs"]
 
 [tasks.setup]
 dependencies = [
