@@ -17,17 +17,37 @@ install_crate = "rustfmt"
 command = "cargo"
 args = ["fmt", "--all", "--"]
 
-[tasks.setup-db]
+[tasks.setup-db-test]
 command = "diesel"
-args = ["setup"]
+args = ["setup", "--config-file", ".env.test"]
+
+[tasks.setup-db-dev]
+command = "diesel"
+args = ["setup", "--config-file", ".env"]
+
+[tasks.setup-db]
+dependencies = [
+	"setup-db-dev",
+	"setup-db-test"
+]
+
+[tasks.migration-test]
+command = "diesel"
+args = ["migration", "run", "--config-file", ".env.test"]
+
+[tasks.migration-dev]
+command = "diesel"
+args = ["migration", "run", "--config-file", ".env"]
 
 [tasks.migration]
-command = "diesel"
-args = ["migration", "run"]
+dependencies = [
+	"migration-dev",
+	"migration-test"
+]
 
 [tasks.generate-schema]
 command = "diesel"
-args = ["print-schema", ">", "src/schema.rs"]
+args = ["print-schema", "--config-file", ".env", ">", "src/schema.rs"]
 
 [tasks.setup]
 dependencies = [
