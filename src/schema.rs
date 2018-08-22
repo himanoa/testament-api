@@ -6,6 +6,7 @@ table! {
         updated_at -> Datetime,
         created_at -> Datetime,
         published -> Bool,
+        user_id -> Integer,
     }
 }
 
