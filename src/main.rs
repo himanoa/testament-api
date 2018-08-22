@@ -1,8 +1,8 @@
 extern crate testament;
 
-use testament::create_rocket;
 use std::env::var;
 use std::process::exit;
+use testament::create_rocket;
 
 fn main() {
     let database_url = match var("DATABASE_URL") {

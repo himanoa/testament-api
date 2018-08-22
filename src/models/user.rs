@@ -1,4 +1,4 @@
-use chrono::{NaiveDateTime};
+use chrono::NaiveDateTime;
 
 #[derive(Debug, Serialize, Deserialize, Queryable)]
 pub struct User {
@@ -6,5 +6,5 @@ pub struct User {
     pub name: String,
     pub uid: String,
     pub updated_at: NaiveDateTime,
-    pub created_at: NaiveDateTime
+    pub created_at: NaiveDateTime,
 }
