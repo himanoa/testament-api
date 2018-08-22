@@ -5,6 +5,7 @@ extern crate diesel;
 extern crate rocket;
 #[macro_use]
 extern crate serde_derive;
+extern crate chrono;
 
 extern crate serde;
 extern crate serde_json;
@@ -13,7 +14,7 @@ extern crate rocket_contrib;
 // pub mod api;
 pub mod error_handlers;
 pub mod helpers;
-// pub mod models;
+pub mod models;
 pub mod schema;
 
 use helpers::mysql::init_mysql_pool;
