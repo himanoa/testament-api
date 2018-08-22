@@ -1,5 +1,5 @@
 [package]
-name = "testament-api"
+name = "testament_api"
 version = "0.1.0"
 authors = ["himanoa <matsunoappy@gmail.com>"]
 
