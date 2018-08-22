@@ -13,11 +13,11 @@ extern crate serde_json;
 extern crate rocket_contrib;
 // pub mod api;
 pub mod error_handlers;
-pub mod helpers;
+pub mod infra;
 pub mod models;
 pub mod schema;
 
-use helpers::mysql::init_mysql_pool;
+use infra::mysql::init_mysql_pool;
 
 pub fn create_rocket(database_url: &str) -> rocket::Rocket {
     rocket::ignite()
