@@ -7,6 +7,7 @@ extern crate rocket;
 extern crate serde_derive;
 extern crate chrono;
 
+#[macro_use]
 extern crate serde;
 extern crate serde_json;
 #[macro_use]

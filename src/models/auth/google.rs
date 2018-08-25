@@ -4,7 +4,7 @@ pub struct TokenResponse {
     id_token: String,
     expire_in: String,
     token_type: String,
-    refresh_token: Option<String>
+    refresh_token: Option<String>,
 }
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -13,5 +13,5 @@ pub struct TokenRequestParams {
     client_id: String,
     client_secret: String,
     redirect_uri: String,
-    grant_type: String
+    grant_type: String,
 }
