@@ -6,12 +6,14 @@ extern crate rocket;
 #[macro_use]
 extern crate serde_derive;
 extern crate chrono;
+extern crate url;
 
 #[macro_use]
 extern crate serde;
 extern crate serde_json;
 #[macro_use]
 extern crate rocket_contrib;
+extern crate oauth2;
 // pub mod api;
 pub mod error_handlers;
 pub mod infra;
