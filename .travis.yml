@@ -17,4 +17,4 @@ before_script:
   - cargo install --force diesel_cli cargo-make
   - cargo make setup-db
 script:
-  - cargo make test
+  - cargo test
