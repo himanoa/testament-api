@@ -17,5 +17,4 @@ before_script:
   - cargo install --force diesel_cli cargo-make
   - cargo make setup-db
 script:
-  - bash -c '[[ "TRAVIS_RUST_VERSION" == "nightly" || cargo build'
   - cargo make test
