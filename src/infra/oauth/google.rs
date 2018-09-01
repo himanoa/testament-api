@@ -78,46 +78,43 @@ fn algolitm_from_str(s: &str) -> Result<Algorithm, VerifyTokenError> {
     }
 }
 
-pub struct GoogleProviderConfig {
-    pub client_id: String,
-    pub client_secret: String,
-    pub auth_url: String,
-    pub token_url: String,
-    pub redirect_url: String,
-}
-
-impl<'a, 'r> FromRequest<'a, 'r> for GoogleProviderConfig {
-    type Error = ();
-    fn from_request(_request: &'a Request<'r> ) -> request::Outcome<Self, Self::Error> {
-        match (|| -> Result<GoogleProviderConfig, VarError> {
-            Ok(GoogleProviderConfig {
-                client_id: var("GOOGLE_CLIENT_ID")?,
-                client_secret: var("GOOGLE_CLIENT_SECRET")?,
-                auth_url: var("GOOGLE_AUTH_URL")?,
-                token_url: var("GOOGLE_TOKEN_URL")?,
-                redirect_url: var("GOOGLE_REDIRECT_URL")?
-            })
-        })() {
-            Ok(config) => Outcome::Success(config),
-            Err(_) => Outcome::Failure((Status::ServiceUnavailable, ())),
-        }
-    }
-}
 impl GoogleProvider {
     pub fn new(
-        config: GoogleProviderConfig
+        client_id: String,
+        client_secret: String,
+        auth_url: String,
+        token_url: String,
+        redirect_url: String,
     ) -> GoogleProvider {
         let client = GoogleClient::new(
-            ClientId::new(config.client_id),
-            Some(ClientSecret::new(config.client_secret)),
-            AuthUrl::new(Url::parse(&config.auth_url).expect("Invalid auth url")),
+            ClientId::new(client_id),
+            Some(ClientSecret::new(client_secret)),
+            AuthUrl::new(Url::parse(&auth_url).expect("Invalid auth url")),
             Some(TokenUrl::new(
-                Url::parse(&config.token_url).expect("Invalid token url"),
+                Url::parse(&token_url).expect("Invalid token url"),
             )),
         ).set_redirect_url(RedirectUrl::new(
-            Url::parse(&config.redirect_url).expect("Invalid redirect URL"),
+            Url::parse(&redirect_url).expect("Invalid redirect URL"),
         ));
         GoogleProvider { client: client }
+    }
+}
+
+impl<'a, 'r> FromRequest<'a, 'r> for GoogleProvider {
+    type Error = ();
+    fn from_request(_request: &'a Request<'r> ) -> request::Outcome<Self, Self::Error> {
+        match (|| -> Result<GoogleProvider, VarError> {
+            Ok(GoogleProvider::new(
+                var("GOOGLE_CLIENT_ID")?,
+                var("GOOGLE_CLIENT_SECRET")?,
+                var("GOOGLE_AUTH_URL")?,
+                var("GOOGLE_TOKEN_URL")?,
+                var("GOOGLE_REDIRECT_URL")?
+            ))
+        })() {
+            Ok(provider) => Outcome::Success(provider),
+            Err(_) => Outcome::Failure((Status::ServiceUnavailable, ())),
+        }
     }
 }
 
