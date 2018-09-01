@@ -12,7 +12,7 @@ matrix:
     - rust: beta
 
 before_script:
-  - cargo install diesel_cli cargo-make
+  - cargo install diesel_cli cargo-make || echo ""
   - cp .env.sample .env
   - cargo make setup-db --env-file=.env
 script:
