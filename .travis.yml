@@ -1,9 +1,9 @@
 language: rust
 cache: cargo
 env:
-  - DATABASE_NAME=boilerplateapp DATABASE_URL=postgres://localhost/boilerplateapp
+  - DATABASE_URL=mysql://localhost/testament TEST_DATABASE_URL=mysql://localhost/testament_test
 services:
-  - postgresql
+  - mysql
 rust:
   - stable
   - beta
@@ -14,10 +14,9 @@ matrix:
     - rust: beta
 
 before_script:
-  - cargo install --force diesel_cli
-  - rustup component add clippy-preview
-  - cp .env.example .env
-  - ./reset.sh
+  - cargo install --force diesel_cli cargo-make
+  - cp .env.sample .env
+  - cargo make setup-db --env-file=.env
 script:
-  - bash -c '[[ "TRAVIS_RUST_VERSION" == "nightly" ]] && cargo clippy || cargo build'
-  - cargo test --verbose
+  - bash -c '[[ "TRAVIS_RUST_VERSION" == "nightly" || cargo build'
+  - cargo make test
