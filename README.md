@@ -13,3 +13,6 @@ My blog API server written in Rust.
 2. Write your database url to .env file.
 3. Execute `cargo make setup-db --env-file=.env`
 3. Execute `cargo run`
+
+## License
+MIT
