@@ -1,1 +1,1 @@
-pub mod google;
+pub mod auth;

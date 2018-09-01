@@ -19,8 +19,11 @@ extern crate rocket_contrib;
 extern crate base64;
 extern crate jsonwebtoken;
 extern crate oauth2;
-// pub mod api;
-pub mod error_handlers;
+extern crate time;
+extern crate uuid;
+
+pub mod api;
+pub mod responses;
 pub mod infra;
 pub mod models;
 pub mod schema;
@@ -31,25 +34,26 @@ use infra::mysql::init_mysql_pool;
 pub fn create_rocket(database_url: &str) -> rocket::Rocket {
     rocket::ignite()
         .manage(init_mysql_pool(database_url))
+        .mount("/auth", routes![api::auth::login])
         .catch(catchers![
-            error_handlers::bad_request,
-            error_handlers::unauthorized,
-            error_handlers::payment_required,
-            error_handlers::forbidden,
-            error_handlers::not_found,
-            error_handlers::method_not_allowed,
-            error_handlers::not_acceptable,
-            error_handlers::proxy_authentication_required,
-            error_handlers::request_timeout,
-            error_handlers::confrict,
-            error_handlers::gone,
-            error_handlers::length_required,
-            error_handlers::procondition_failed,
-            error_handlers::payload_too_large,
-            error_handlers::internal_error,
-            error_handlers::not_implemented,
-            error_handlers::bad_gateway,
-            error_handlers::service_unavailable,
-            error_handlers::gateway_timeout
+            responses::bad_request,
+            responses::unauthorized,
+            responses::payment_required,
+            responses::forbidden,
+            responses::not_found,
+            responses::method_not_allowed,
+            responses::not_acceptable,
+            responses::proxy_authentication_required,
+            responses::request_timeout,
+            responses::confrict,
+            responses::gone,
+            responses::length_required,
+            responses::procondition_failed,
+            responses::payload_too_large,
+            responses::internal_error,
+            responses::not_implemented,
+            responses::bad_gateway,
+            responses::service_unavailable,
+            responses::gateway_timeout
         ])
 }

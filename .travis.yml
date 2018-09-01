@@ -1,7 +1,5 @@
 language: rust
 cache: cargo
-env:
-  - DATABASE_URL=mysql://localhost/testament TEST_DATABASE_URL=mysql://localhost/testament_test
 services:
   - mysql
 rust:
@@ -14,7 +12,8 @@ matrix:
     - rust: beta
 
 before_script:
-  - cargo install --force diesel_cli cargo-make
-  - cargo make setup-db
+  - cargo install diesel_cli cargo-make || echo ""
+  - cp .env.sample .env
+  - cargo make setup-db --env-file=.env
 script:
   - cargo test
