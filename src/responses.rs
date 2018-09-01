@@ -1,5 +1,58 @@
 use rocket_contrib::json::Json;
 use serde_json::Value;
+use rocket::request::Request;
+use rocket::response::{Response, Responder};
+use rocket::http::{Status, ContentType};
+
+use std::io::Cursor;
+
+#[derive(Debug)]
+pub struct APIResponse {
+    data: Value,
+    status: Status,
+}
+
+impl APIResponse {
+    /// Set the data of the `Response` to `data`.
+    pub fn data(mut self, data: Value) -> APIResponse {
+        self.data = data;
+        self
+    }
+
+    /// Convenience method to set `self.data` to `{"message": message}`.
+    pub fn message(mut self, message: &str) -> APIResponse {
+        self.data = json!({
+            "message": message
+        });
+        self
+    }
+}
+
+impl<'r> Responder<'r> for APIResponse {
+    fn respond_to(self, _req: &Request) -> Result<Response<'r>, Status> {
+        let body = self.data;
+
+        Response::build()
+            .status(self.status)
+            .sized_body(Cursor::new(body.to_string()))
+            .header(ContentType::JSON)
+            .ok()
+    }
+}
+
+pub fn ok() -> APIResponse {
+    APIResponse {
+        data: json!(null),
+        status: Status::Ok,
+    }
+}
+
+pub fn created() -> APIResponse {
+    APIResponse {
+        data: json!(null),
+        status: Status::Created,
+    }
+}
 
 #[catch(400)]
 pub fn bad_request() -> Json<Value> {
