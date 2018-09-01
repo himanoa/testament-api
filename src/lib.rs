@@ -24,6 +24,7 @@ pub mod error_handlers;
 pub mod infra;
 pub mod models;
 pub mod schema;
+pub mod services;
 
 use infra::mysql::init_mysql_pool;
 
