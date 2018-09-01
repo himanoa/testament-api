@@ -12,7 +12,7 @@ matrix:
     - rust: beta
 
 before_script:
-  - cargo install --force diesel_cli cargo-make
+  - cargo install diesel_cli cargo-make
   - cargo make setup-db
 script:
   - cargo test
