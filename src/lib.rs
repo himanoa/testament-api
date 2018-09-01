@@ -34,6 +34,7 @@ use infra::mysql::init_mysql_pool;
 pub fn create_rocket(database_url: &str) -> rocket::Rocket {
     rocket::ignite()
         .manage(init_mysql_pool(database_url))
+        .mount("/auth", routes![api::auth::login])
         .catch(catchers![
             responses::bad_request,
             responses::unauthorized,
