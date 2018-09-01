@@ -122,7 +122,7 @@ impl OAuthProvider for GoogleProvider {
         let key = jwks.keys.iter().find(|ref val| val.kid == envelope.kid)?;
         let algolithm :Algorithm = algolitm_from_str(key.alg.as_str())?;
         let validation: Validation = Validation { algorithms: Some(vec![algolithm]), ..Validation::default() };
-        let tokenData: TokenData<Claims> = match decode::<Claims>(token, key.n.as_bytes(), &validation) {
+        let token_data: TokenData<Claims> = match decode::<Claims>(token, key.n.as_bytes(), &validation) {
             Ok(c) => Ok(c),
             Err(e) => match *e.kind() {
                 ErrorKind::InvalidToken => Err(VerifyTokenError::InvalidTokenError),
@@ -130,6 +130,6 @@ impl OAuthProvider for GoogleProvider {
                 _ => panic!()
             }
         }?;
-        Ok(tokenData.claims)
+        Ok(token_data.claims)
     }
 }
