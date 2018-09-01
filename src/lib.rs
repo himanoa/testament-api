@@ -12,14 +12,13 @@ extern crate url;
 extern crate failure;
 extern crate reqwest;
 
-#[macro_use]
 extern crate serde;
 extern crate serde_json;
 #[macro_use]
 extern crate rocket_contrib;
-extern crate oauth2;
 extern crate base64;
 extern crate jsonwebtoken;
+extern crate oauth2;
 // pub mod api;
 pub mod error_handlers;
 pub mod infra;

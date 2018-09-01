@@ -1,12 +1,11 @@
 pub mod google;
-use url::Url;
 use failure;
+use jsonwebtoken::errors;
 use models::auth::Jwks;
 use reqwest;
-use std;
 use serde_json;
-use jsonwebtoken::errors;
-
+use std;
+use url::Url;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
@@ -16,23 +15,17 @@ pub struct Claims {
     pub at_hash: String,
     pub exp: u64,
     pub iss: String,
-    pub iat: u64
+    pub iat: u64,
 }
 
 #[derive(Debug, Fail)]
 pub enum VerifyTokenError {
     #[fail(display = "Segments length error: {}", msg)]
-    SegmentSplitError {
-        msg: String,
-    },
+    SegmentSplitError { msg: String },
     #[fail(display = "Decode error: {}", msg)]
-    EnvelopeDecodeError {
-        msg: String,
-    },
+    EnvelopeDecodeError { msg: String },
     #[fail(display = "Algorithm parse error: {}", msg)]
-    UnknownAlgolithmError {
-        msg: String,
-    },
+    UnknownAlgolithmError { msg: String },
     #[fail(display = "InvalidTokenError")]
     InvalidTokenError,
     #[fail(display = "InvalidIssuerError")]
