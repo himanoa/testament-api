@@ -64,7 +64,7 @@ impl From<std::option::NoneError> for VerifyTokenError {
 }
 
 pub trait OAuthProvider {
-    fn generate_authorize_url(&self, state: &str) -> Result<(Url, String), failure::Error>;
+    fn generate_authorize_url(&self, state: &str) -> Result<(String, String), failure::Error>;
     fn get_token(&self, code: &str) -> Result<String, failure::Error>;
     fn verify_token(&self, token: &str, well_knwon_url: &str) -> Result<Claims, VerifyTokenError>;
 }

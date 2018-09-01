@@ -9,11 +9,14 @@ use oauth2::{
     AuthUrl, AuthorizationCode, Client, ClientId, ClientSecret, CsrfToken, ExtraTokenFields,
     RedirectUrl, TokenResponse, TokenUrl,
 };
+
+use rocket::request::{self, FromRequest};
+use rocket::{Outcome, Request, State};
+use rocket::http::Status;
 use reqwest;
 use serde_json;
 use url::Url;
-
-use std::str::FromStr;
+use std::env::{var, VarError};
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct GoogleTokenField {
@@ -75,34 +78,55 @@ fn algolitm_from_str(s: &str) -> Result<Algorithm, VerifyTokenError> {
     }
 }
 
+pub struct GoogleProviderConfig {
+    pub client_id: String,
+    pub client_secret: String,
+    pub auth_url: String,
+    pub token_url: String,
+    pub redirect_url: String,
+}
+
+impl<'a, 'r> FromRequest<'a, 'r> for GoogleProviderConfig {
+    type Error = ();
+    fn from_request(_request: &'a Request<'r> ) -> request::Outcome<Self, Self::Error> {
+        match (|| -> Result<GoogleProviderConfig, VarError> {
+            Ok(GoogleProviderConfig {
+                client_id: var("GOOGLE_CLIENT_ID")?,
+                client_secret: var("GOOGLE_CLIENT_SECRET")?,
+                auth_url: var("GOOGLE_AUTH_URL")?,
+                token_url: var("GOOGLE_TOKEN_URL")?,
+                redirect_url: var("GOOGLE_REDIRECT_URL")?
+            })
+        })() {
+            Ok(config) => Outcome::Success(config),
+            Err(_) => Outcome::Failure((Status::ServiceUnavailable, ())),
+        }
+    }
+}
 impl GoogleProvider {
-    fn new(
-        client_id: String,
-        client_secret: String,
-        auth_url: String,
-        token_url: String,
-        redirect_url: String,
+    pub fn new(
+        config: GoogleProviderConfig
     ) -> GoogleProvider {
         let client = GoogleClient::new(
-            ClientId::new(client_id),
-            Some(ClientSecret::new(client_secret)),
-            AuthUrl::new(Url::parse(&auth_url).expect("Invalid auth url")),
+            ClientId::new(config.client_id),
+            Some(ClientSecret::new(config.client_secret)),
+            AuthUrl::new(Url::parse(&config.auth_url).expect("Invalid auth url")),
             Some(TokenUrl::new(
-                Url::parse(&token_url).expect("Invalid token url"),
+                Url::parse(&config.token_url).expect("Invalid token url"),
             )),
         ).set_redirect_url(RedirectUrl::new(
-            Url::parse(&redirect_url).expect("Invalid redirect URL"),
+            Url::parse(&config.redirect_url).expect("Invalid redirect URL"),
         ));
         GoogleProvider { client: client }
     }
 }
 
 impl OAuthProvider for GoogleProvider {
-    fn generate_authorize_url(&self, state: &str) -> Result<(Url, String), failure::Error> {
+    fn generate_authorize_url(&self, state: &str) -> Result<(String, String), failure::Error> {
         let (authorize_url, state) = self
             .client
             .authorize_url(|| CsrfToken::new(state.to_string()));
-        Ok((authorize_url, state.secret().clone()))
+        Ok((authorize_url.to_string(), state.secret().clone()))
     }
 
     fn get_token(&self, code: &str) -> Result<String, failure::Error> {
