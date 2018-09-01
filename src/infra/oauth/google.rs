@@ -11,7 +11,7 @@ use oauth2::{
 };
 
 use rocket::request::{self, FromRequest};
-use rocket::{Outcome, Request, State};
+use rocket::{Outcome, Request};
 use rocket::http::Status;
 use reqwest;
 use serde_json;
