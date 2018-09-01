@@ -1,11 +1,11 @@
 #![feature(use_extern_macros, proc_macro_gen)]
 
-extern crate rocket;
-extern crate rocket_contrib;
 extern crate diesel;
 extern crate parking_lot;
-extern crate serde_json;
+extern crate rocket;
+extern crate rocket_contrib;
 extern crate serde_derive;
+extern crate serde_json;
 #[cfg(test)]
 extern crate speculate;
 extern crate testament;
@@ -18,8 +18,8 @@ use speculate::speculate;
 
 use testament::create_rocket;
 
-use std::env::var;
 use common::setup;
+use std::env::var;
 
 speculate! {
     before {
