@@ -11,6 +11,16 @@ table! {
 }
 
 table! {
+    tokens (id) {
+        id -> Integer,
+        user_id -> Integer,
+        token -> Text,
+        updated_at -> Datetime,
+        created_at -> Datetime,
+    }
+}
+
+table! {
     users (id) {
         id -> Integer,
         name -> Varchar,
@@ -18,4 +28,8 @@ table! {
     }
 }
 
-allow_tables_to_appear_in_same_query!(entries, users,);
+allow_tables_to_appear_in_same_query!(
+    entries,
+    tokens,
+    users,
+);
