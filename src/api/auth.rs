@@ -14,15 +14,15 @@ pub fn login(mut cookies: Cookies, provider: GoogleProvider) -> Result<Redirect,
     let mut expire = now();
     expire.tm_hour = expire.tm_hour + 2;
     let uuid = Uuid::new_v4().to_string();
-    let state_cookie = Cookie::build("blog_manage_login_state", uuid.clone() )
+    let (url, state) = match provider.generate_authorize_url(&uuid) {
+        Ok((u, s)) => (u,s),
+        Err(_) => return Err(Status::ServiceUnavailable)
+    };
+    let state_cookie = Cookie::build("blog_manage_login_state", state )
         .expires(expire)
         .path("/")
         .secure(true)
         .finish();
     cookies.add(state_cookie);
-    let url = match provider.generate_authorize_url(&uuid) {
-        Ok((u, _)) => u,
-        Err(_) => return Err(Status::ServiceUnavailable)
-    };
     Ok(Redirect::to(&url))
 }
