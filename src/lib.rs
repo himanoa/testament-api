@@ -25,7 +25,6 @@ pub mod api;
 pub mod responses;
 pub mod infra;
 pub mod models;
-pub mod schema;
 pub mod services;
 
 pub fn create_rocket(database_url: &str) -> rocket::Rocket {
