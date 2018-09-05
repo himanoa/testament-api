@@ -1,6 +1,3 @@
-#![feature(use_extern_macros, proc_macro_gen)]
-
-extern crate diesel;
 extern crate parking_lot;
 extern crate rocket;
 extern crate rocket_contrib;
