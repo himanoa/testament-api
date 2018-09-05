@@ -1,10 +1,6 @@
 use chrono::NaiveDateTime;
-use models::user::User;
-use schema::entries;
 
-#[derive(Debug, Serialize, Deserialize, Queryable, Associations)]
-#[belongs_to(User)]
-#[table_name = "entries"]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct Entry {
     pub id: i32,
     pub user_id: i32,
@@ -15,8 +11,7 @@ pub struct Entry {
     pub published: bool,
 }
 
-#[derive(Debug, Serialize, Deserialize, Insertable)]
-#[table_name = "entries"]
+#[derive(Debug, Serialize, Deserialize)]
 pub struct NewEntry {
     pub user_id: i32,
     pub title: String,
