@@ -17,6 +17,14 @@ pub struct User {
     pub created_at: NaiveDateTime,
 }
 
+
+#[derive(Debug, Deserialize, Insertable)]
+#[table_name = "users"]
+pub struct NewUser {
+    pub name: String,
+    pub uid: String,
+}
+
 pub trait UserRepository {
     fn resolve(&self, id: i32) -> Result<User, DieselError>;
     fn find_by_uid(&self, uid: &str) -> Result<User, DieselError>;
@@ -24,6 +32,12 @@ pub trait UserRepository {
 
 pub struct MySqlUserRepository<'a> {
     conn: &'a MysqlConnection,
+}
+
+impl<'a> MySqlUserRepository<'a> {
+    pub fn new(conn: &'a MysqlConnection) -> MySqlUserRepository {
+        MySqlUserRepository { conn: conn }
+    }
 }
 
 impl<'a> UserRepository for MySqlUserRepository<'a> {
