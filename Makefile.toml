@@ -11,6 +11,15 @@ dependencies = ["clean"]
 command = "cargo"
 args = ["test"]
 
+[tasks.post-test]
+command = "diesel"
+args = ["database","reset", "--database-url", "${TEST_DATABASE_URL}"]
+
+[tasks.test-flow]
+dependencies = [
+	"test",
+	"post-test"
+]
 [tasks.format]
 install_crate = "rustfmt"
 command = "cargo"

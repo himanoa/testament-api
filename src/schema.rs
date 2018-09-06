@@ -25,11 +25,9 @@ table! {
         id -> Integer,
         name -> Varchar,
         uid -> Varchar,
+        created_at -> Datetime,
+        updated_at -> Datetime,
     }
 }
 
-allow_tables_to_appear_in_same_query!(
-    entries,
-    tokens,
-    users,
-);
+allow_tables_to_appear_in_same_query!(entries, tokens, users,);
