@@ -13,13 +13,13 @@ mod common;
 use common::setup;
 use speculate::speculate;
 use std::env::var;
-use testament::infra::mysql::{init_mysql_pool};
-use testament::models::user::{MySqlUserRepository, UserRepository, User, NewUser};
+use testament::infra::mysql::init_mysql_pool;
+use testament::models::user::{MySqlUserRepository, NewUser, User, UserRepository};
 use testament::schema::users;
 use testament::schema::users::dsl::*;
 
-use diesel::prelude::*;
 use diesel::insert_into;
+use diesel::prelude::*;
 
 speculate! {
     before {

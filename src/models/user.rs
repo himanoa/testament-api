@@ -17,7 +17,6 @@ pub struct User {
     pub created_at: NaiveDateTime,
 }
 
-
 #[derive(Debug, Deserialize, Insertable)]
 #[table_name = "users"]
 pub struct NewUser {
