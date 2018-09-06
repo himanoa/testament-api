@@ -23,9 +23,9 @@ extern crate time;
 extern crate uuid;
 
 pub mod api;
-pub mod responses;
 pub mod infra;
 pub mod models;
+pub mod responses;
 pub mod schema;
 pub mod services;
 

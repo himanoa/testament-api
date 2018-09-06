@@ -25,6 +25,8 @@ table! {
         id -> Integer,
         name -> Varchar,
         uid -> Varchar,
+        created_at -> Datetime,
+        updated_at -> Datetime,
     }
 }
 

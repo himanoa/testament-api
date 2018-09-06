@@ -1,8 +1,8 @@
+use rocket::http::{ContentType, Status};
+use rocket::request::Request;
+use rocket::response::{Responder, Response};
 use rocket_contrib::json::Json;
 use serde_json::Value;
-use rocket::request::Request;
-use rocket::response::{Response, Responder};
-use rocket::http::{Status, ContentType};
 
 use std::io::Cursor;
 
@@ -21,9 +21,7 @@ impl APIResponse {
 
     /// Convenience method to set `self.data` to `{"message": message}`.
     pub fn message(mut self, message: &str) -> APIResponse {
-        self.data = json!({
-            "message": message
-        });
+        self.data = json!({ "message": message });
         self
     }
 }

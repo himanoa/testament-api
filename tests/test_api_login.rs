@@ -1,4 +1,3 @@
-
 #![feature(use_extern_macros, proc_macro_gen)]
 
 extern crate rocket;

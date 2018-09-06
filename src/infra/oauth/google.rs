@@ -10,13 +10,13 @@ use oauth2::{
     RedirectUrl, TokenResponse, TokenUrl,
 };
 
+use reqwest;
+use rocket::http::Status;
 use rocket::request::{self, FromRequest};
 use rocket::{Outcome, Request};
-use rocket::http::Status;
-use reqwest;
 use serde_json;
-use url::Url;
 use std::env::{var, VarError};
+use url::Url;
 
 #[derive(Debug, Serialize, Deserialize, PartialEq)]
 pub struct GoogleTokenField {
@@ -102,14 +102,14 @@ impl GoogleProvider {
 
 impl<'a, 'r> FromRequest<'a, 'r> for GoogleProvider {
     type Error = ();
-    fn from_request(_request: &'a Request<'r> ) -> request::Outcome<Self, Self::Error> {
+    fn from_request(_request: &'a Request<'r>) -> request::Outcome<Self, Self::Error> {
         match (|| -> Result<GoogleProvider, VarError> {
             Ok(GoogleProvider::new(
                 var("GOOGLE_CLIENT_ID")?,
                 var("GOOGLE_CLIENT_SECRET")?,
                 var("GOOGLE_AUTH_URL")?,
                 var("GOOGLE_TOKEN_URL")?,
-                var("GOOGLE_REDIRECT_URL")?
+                var("GOOGLE_REDIRECT_URL")?,
             ))
         })() {
             Ok(provider) => Outcome::Success(provider),
