@@ -19,7 +19,7 @@ pub struct User {
 
 pub trait UserRepository {
     fn resolve(&self, id: i32) -> Result<User, DieselError>;
-    // fn find_by_uid(&self, uid: &str) -> Option<User>;
+    fn find_by_uid(&self, uid: &str) -> Result<User, DieselError>;
 }
 
 pub struct MySqlUserRepository<'a> {
@@ -38,7 +38,13 @@ impl<'a> UserRepository for MySqlUserRepository<'a> {
             )).find(user_id)
             .first::<User>(self.conn)
     }
-    // fn find_by_uid(&self, input_uid: &str) -> Option<User> {
-    //     users::table.
-    // }
+    fn find_by_uid(&self, input_uid: &str) -> Result<User, DieselError> {
+         users.select((
+                users::id,
+                users::name,
+                users::uid,
+                users::updated_at,
+                users::created_at
+         )).filter(users::uid.eq(input_uid)).first::<User>(self.conn)
+    }
 }
