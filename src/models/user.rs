@@ -39,12 +39,14 @@ impl<'a> UserRepository for MySqlUserRepository<'a> {
             .first::<User>(self.conn)
     }
     fn find_by_uid(&self, input_uid: &str) -> Result<User, DieselError> {
-         users.select((
+        users
+            .select((
                 users::id,
                 users::name,
                 users::uid,
                 users::updated_at,
-                users::created_at
-         )).filter(users::uid.eq(input_uid)).first::<User>(self.conn)
+                users::created_at,
+            )).filter(users::uid.eq(input_uid))
+            .first::<User>(self.conn)
     }
 }
