@@ -1,15 +1,5 @@
 #![feature(use_extern_macros, proc_macro_gen)]
 
-extern crate diesel;
-extern crate parking_lot;
-extern crate serde_derive;
-extern crate serde_json;
-#[cfg(test)]
-extern crate speculate;
-extern crate testament;
-
-mod common;
-
 use common::setup;
 use speculate::speculate;
 use std::env::var;
