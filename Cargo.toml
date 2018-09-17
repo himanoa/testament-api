@@ -31,6 +31,6 @@ time = { version = "0.1"}
 uuid = { version = "0.7.0", features=["v4"] }
 
 [dev-dependencies]
-mockito = { version = "0.12.0" }
+mockito = { version = "0.13.0" }
 speculate = { git = "https://github.com/utkarshkukreti/speculate.rs" }
 parking_lot = { version = "0.6", features = ["nightly"] }
