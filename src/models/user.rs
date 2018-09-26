@@ -1,9 +1,7 @@
 use chrono::NaiveDateTime;
-use diesel;
 use diesel::mysql::MysqlConnection;
 use diesel::prelude::*;
 use diesel::result::Error as DieselError;
-use infra::mysql::DbConn;
 use schema::users;
 use schema::users::dsl::*;
 
