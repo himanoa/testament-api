@@ -7,5 +7,4 @@ extern crate speculate;
 extern crate testament;
 
 mod common;
-mod models;
 mod infra;
