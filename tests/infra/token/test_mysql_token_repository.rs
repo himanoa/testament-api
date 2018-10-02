@@ -4,7 +4,8 @@ use common::setup;
 use speculate::speculate;
 use std::env::var;
 use testament::infra::mysql::init_mysql_pool;
-use testament::models::token::{MySqlTokenRepository, NewToken, Token, TokenRepository};
+use testament::models::token::{NewToken, Token, TokenRepository};
+use testament::infra::token::mysql_token_repository::{MySqlTokenRepository};
 use testament::schema::tokens;
 use testament::schema::tokens::dsl::*;
 
