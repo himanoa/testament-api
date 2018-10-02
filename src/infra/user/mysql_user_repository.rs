@@ -1,7 +1,7 @@
 use diesel::mysql::MysqlConnection;
-use models::user::{UserRepository, NewUser, User};
 use diesel::prelude::*;
 use diesel::result::Error as DieselError;
+use models::user::{NewUser, User, UserRepository};
 use schema::users;
 use schema::users::dsl::*;
 
