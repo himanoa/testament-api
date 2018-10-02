@@ -30,10 +30,10 @@ pub struct NewToken {
 
 pub trait TokenRepository {
     fn resolve(&self, token: String) -> Result<Token, DieselError>;
-    fn create(&self, newToken: NewToken) -> Result<usize, DieselError>;
-    fn delete(&self, targetId: i32) -> Result<usize, DieselError>;
-    fn delete_all_by_user(&self, user: User) -> Result<usize, DieselError>;
-    fn list_by_user(&self, user: User) -> Result<Vec<Token>, DieselError>;
+    fn create(&self, new_token: &NewToken) -> Result<usize, DieselError>;
+    fn delete(&self, target_id: i32) -> Result<usize, DieselError>;
+    fn delete_all_by_user(&self, user: &User) -> Result<usize, DieselError>;
+    fn list_by_user(&self, user: &User) -> Result<Vec<Token>, DieselError>;
 }
 
 pub struct MySqlTokenRepository<'a> {
@@ -56,16 +56,18 @@ impl<'a> TokenRepository for MySqlTokenRepository<'a> {
             tokens::created_at,
         )).filter(tokens::token.eq(input_token)).first::<Token>(self.conn)
     }
-    fn create(&self, new_token: NewToken) -> Result<usize, DieselError> {
+    fn create(&self, new_token: &NewToken) -> Result<usize, DieselError> {
         insert_into(tokens).values(new_token).execute(self.conn)
     }
     fn delete(&self, target_id: i32) -> Result<usize, DieselError> {
         delete(tokens).filter(tokens::id.eq(target_id)).execute(self.conn)
     }
-    fn delete_all_by_user(&self, user: User) -> Result<usize, DieselError> {
+    // TODO: テストを書く
+    fn delete_all_by_user(&self, user: &User) -> Result<usize, DieselError> {
         delete(tokens).filter(tokens::user_id.eq(user.id)).execute(self.conn)
     }
-    fn list_by_user(&self, user: User) -> Result<Vec<Token>, DieselError> {
+    // TODO: テストを書く
+    fn list_by_user(&self, user: &User) -> Result<Vec<Token>, DieselError> {
         tokens
             .select((
                 tokens::id,
