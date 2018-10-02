@@ -4,8 +4,8 @@ use common::setup;
 use speculate::speculate;
 use std::env::var;
 use testament::infra::mysql::init_mysql_pool;
-use testament::models::user::{MySqlUserRepository, NewUser, User, UserRepository};
-use testament::schema::users;
+use testament::infra::user::mysql_user_repository::MySqlUserRepository;
+use testament::models::user::{NewUser, User, UserRepository};
 use testament::schema::users::dsl::*;
 
 use diesel::insert_into;
