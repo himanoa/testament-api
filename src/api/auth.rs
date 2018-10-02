@@ -9,7 +9,7 @@ use time::now;
 use infra::oauth::google::GoogleProvider;
 use infra::oauth::OAuthProvider;
 
-#[get("/login", format = "application/json")]
+#[get("/login")]
 pub fn login(mut cookies: Cookies, provider: GoogleProvider) -> Result<Redirect, Status> {
     let mut expire = now();
     expire.tm_hour = expire.tm_hour + 2;

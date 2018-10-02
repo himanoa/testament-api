@@ -7,7 +7,7 @@ use oauth2::basic::{BasicErrorResponseType, BasicTokenType};
 use oauth2::prelude::*;
 use oauth2::{
     AuthUrl, AuthorizationCode, Client, ClientId, ClientSecret, CsrfToken, ExtraTokenFields,
-    RedirectUrl, TokenResponse, TokenUrl,
+    RedirectUrl, TokenResponse, TokenUrl, Scope
 };
 
 use reqwest;
@@ -95,7 +95,7 @@ impl GoogleProvider {
             )),
         ).set_redirect_url(RedirectUrl::new(
             Url::parse(&redirect_url).expect("Invalid redirect URL"),
-        ));
+        )).add_scope(Scope::new("profile".to_string()));
         GoogleProvider { client: client }
     }
 }
