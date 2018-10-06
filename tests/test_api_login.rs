@@ -1,4 +1,4 @@
-#![feature(use_extern_macros)]
+#![feature(use_extern_macros, proc_macro_hygiene)]
 
 extern crate rocket;
 extern crate rocket_contrib;
@@ -28,7 +28,7 @@ speculate! {
 
     describe "/login" {
         it "should be http status is SeeOther" {
-            let res = client.get("/auth/login")
+            let res = client.get("/auth/google/login")
                 .header(ContentType::JSON)
                 .dispatch();
             assert_eq!(res.status(), Status::SeeOther);
