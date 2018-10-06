@@ -1,4 +1,4 @@
-#![feature(use_extern_macros, proc_macro_gen)]
+#![feature(use_extern_macros)]
 
 extern crate diesel;
 extern crate parking_lot;
