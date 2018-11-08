@@ -1,11 +1,8 @@
+#![allow(proc_macro_derive_resolution_fallback)]
 use chrono::NaiveDateTime;
-use diesel::mysql::MysqlConnection;
-use diesel::prelude::*;
 use diesel::result::Error as DieselError;
-use diesel::{delete, insert_into};
 use models::user::User;
 use schema::tokens;
-use schema::tokens::dsl::*;
 
 #[derive(Debug, Serialize, Deserialize, Queryable, Identifiable, Associations)]
 #[table_name = "tokens"]

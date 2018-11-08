@@ -1,9 +1,7 @@
+#![allow(proc_macro_derive_resolution_fallback)]
 use chrono::NaiveDateTime;
-use diesel::mysql::MysqlConnection;
-use diesel::prelude::*;
 use diesel::result::Error as DieselError;
 use schema::users;
-use schema::users::dsl::*;
 
 #[derive(Debug, Serialize, Deserialize, Queryable, Identifiable, AsChangeset)]
 #[table_name = "users"]
