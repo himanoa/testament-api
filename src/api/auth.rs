@@ -3,7 +3,6 @@ use rocket::response::Redirect;
 use uuid::Uuid;
 // TODO: Time crate is deprecated.
 // Refactoring with a chrono when the cookie crate cut the time crate dependency.
-use serde_json::to_value;
 use time::now;
 
 use infra::oauth::google::GoogleProvider;

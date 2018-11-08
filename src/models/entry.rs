@@ -1,3 +1,4 @@
+#![allow(proc_macro_derive_resolution_fallback)]
 use chrono::NaiveDateTime;
 use models::user::User;
 use schema::entries;

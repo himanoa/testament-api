@@ -1,11 +1,8 @@
 pub mod google;
 use failure;
-use jsonwebtoken::errors;
-use models::auth::Jwks;
 use reqwest;
 use serde_json;
 use std;
-use url::Url;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Claims {
