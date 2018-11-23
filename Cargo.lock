@@ -1277,7 +1277,7 @@ dependencies = [
 [[package]]
 name = "speculate"
 version = "0.1.0"
-source = "git+https://github.com/utkarshkukreti/speculate.rs#542677b40072e7293a8bc40ef2d88d4f10cd20c3"
+source = "git+https://github.com/utkarshkukreti/speculate.rs#b57a55d31b475c93cc8a2556e17fb1fc8d05b166"
 dependencies = [
  "proc-macro2 0.4.15 (registry+https://github.com/rust-lang/crates.io-index)",
  "quote 0.6.8 (registry+https://github.com/rust-lang/crates.io-index)",
